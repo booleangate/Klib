@@ -1,46 +1,47 @@
+var K = require("./K");
+
 (function() {
 	"use strict";
 	
-	var K = {
-		concat: function(a, b) {
-			if (K.isArray(a)) {
-				return a.concat(b);
-			}
-			
-			return  a + b;
-		},
 	
-		repeat: function(input, times) {
-			var result = K.isArray(input) ? [] : "",
-				i = 0;
-			
-			while (i++ < times) {
-				result = K.concat(result, input);
-			}
-	
-			return result;
-		},
-	
-		padLeft: function(input, padCharacter, totalLength) {
-			return K.concat(K.repeat(padCharacter, totalLength - (input + "").length), input);
-		},
-	
-		padRight: function(input, padCharacter, totalLength) {
-			return K.concat(input, K.repeat(padCharacter, totalLength - (input + "").length));
-		},
-
-		sort: function(input, comparator) {
-			// No comparator, use the default.
-			if (!comparator) {
-				comparator = defaultComparator;
-			}
-			// Comparator is a key (not a function), create a function.
-			else if (!K.isFunction(comparator)) {
-				comparator = createKeyComparator(comparator);
-			}
-	
-			return mergeSort(input, comparator);
+	K.concat = function(a, b) {
+		if (K.isArray(a)) {
+			return a.concat(b);
 		}
+		
+		return  a + b;
+	};
+
+	K.repeat = function(input, times) {
+		var result = K.isArray(input) ? [] : "",
+			i = 0;
+		
+		while (i++ < times) {
+			result = K.concat(result, input);
+		}
+
+		return result;
+	};
+
+	K.padLeft =function(input, padCharacter, totalLength) {
+		return K.concat(K.repeat(padCharacter, totalLength - (input + "").length), input);
+	};
+
+	K.padRight = function(input, padCharacter, totalLength) {
+		return K.concat(input, K.repeat(padCharacter, totalLength - (input + "").length));
+	};
+
+	K.sort = function(input, comparator) {
+		// No comparator, use the default.
+		if (!comparator) {
+			comparator = defaultComparator;
+		}
+		// Comparator is a key (not a function), create a function.
+		else if (!K.isFunction(comparator)) {
+			comparator = createKeyComparator(comparator);
+		}
+
+		return mergeSort(input, comparator);
 	};
 	
 	function defaultComparator(a, b) {

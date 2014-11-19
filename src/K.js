@@ -1,5 +1,5 @@
-var collection = require("./collection");
-var validation = require("./validation");
-var object = require("./object");
+require("./validation");
+require("./collection");
+require("./object");
 
-module.exports = object.mixin(collection, validation, object);
+module.exports = {};

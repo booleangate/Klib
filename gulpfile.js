@@ -1,5 +1,5 @@
 var gulp = require("gulp");
-var config	= require("./package");
+var config = require("./package");
 var jshint = require("gulp-jshint");
 var browserify = require("browserify");
 var rename = require("gulp-rename");
@@ -22,11 +22,10 @@ gulp.task("build", function() {
 		.pipe(gulp.dest("./dist"));
 });
 
-gulp.task("finalize", function() {
+gulp.task("finalize", ["build"], function() {
 	return gulp.src("./dist/K.js")
-		.pipe(gulp.dest("./dist"))
-		.pipe(rename("K.min.js"))
 		.pipe(uglify())
+		.pipe(rename("K.min.js"))
 		.pipe(gulp.dest("./dist"));
 });
 

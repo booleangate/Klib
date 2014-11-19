@@ -3,7 +3,6 @@ var config	= require('./package');
 var jshint = require("gulp-jshint");
 var source = require("vinyl-source-stream");
 var gutil = require('gulp-util');
-var watchify = require('watchify');
 var browserify = require('browserify');
 
 function getJsStream() {

@@ -7,7 +7,7 @@
     "email": "me@justinjohnson.org",
     "url": "http://justinjohnson.org"
   },
-  "main": "dist/K.js",
+  "main": "dist/K.min.js",
   "directories": {
     "doc": "docs",
     "test": "tests"

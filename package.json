@@ -1,6 +1,6 @@
 {
   "name": "klib",
-  "version": "0.1.7",
+  "version": "0.1.9",
   "description": "Basic library package, no external dependencies",
   "author": {
     "name": "Justin Johnson",
@@ -28,8 +28,7 @@
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "tap tests/*.js",
-    "publish": "npm publish ./ --tag beta"
+    "test": "tap tests/*.js"
   },
   "repository": {
     "type": "git",

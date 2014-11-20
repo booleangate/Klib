@@ -1,5 +1,4 @@
 var gulp = require("gulp");
-var config = require("./package");
 var jshint = require("gulp-jshint");
 var browserify = require("browserify");
 var rename = require("gulp-rename");
@@ -7,9 +6,14 @@ var util = require("gulp-util");
 var source = require("vinyl-source-stream");
 var uglify = require("gulp-uglify");
 
+var jsHintConfig =  {
+	unused: true,
+	eqnull: true
+};
+
 gulp.task("lint", function() {
 	return gulp.src("./src/**/*.js")
-		.pipe(jshint(config.jshint))
+		.pipe(jshint(jsHintConfig))
 		.pipe(jshint.reporter("default"));
 });
 

@@ -34,9 +34,5 @@
     "type": "git",
     "url": "https://github.com/booleangate/Klib.git"
   },
-  "readme": "See ./README.md",
-  "jshint": {
-    "unused": true,
-    "eqnull": true
-  }
+  "readme": "See ./README.md"
 }

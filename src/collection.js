@@ -3,34 +3,79 @@ var K = require("./K");
 (function() {
 	"use strict";
 	
-	
+	/**
+	 * Concatenate a string or an array to another of the same type.
+	 * 
+	 * @param {string|array} a
+	 * @param {string|array} b
+	 */
 	K.concat = function(a, b) {
-		if (K.isArray(a)) {
+		// Strict equeality with null is intentionally not used here.
+		if (a == null) {
+			return b;
+		}
+		else if (b == null) {
+			return a;
+		}
+		else if (K.isArray(a)) {
 			return a.concat(b);
 		}
 		
-		return  a + b;
+		return  "" + a + b;
+	};
+	
+	/**
+	 * Prepend a value to a string or an array until its length is totalLength. 
+	 *  
+	 * @param {string|array} input
+	 * @param {mixed} value
+	 * @param {number} totalLength
+	 */
+	K.padLeft = function(input, value, totalLength) {
+		return K.concat(
+			createPad(input, value, totalLength),
+			input
+		);
 	};
 
-	K.repeat = function(input, times) {
-		var result = K.isArray(input) ? [] : "",
+	/**
+	 * Append a value to a string or an array until its length is totalLength. 
+	 *  
+	 * @param {string|array} input
+	 * @param {mixed} value
+	 * @param {number} totalLength
+	 */
+	K.padRight = function(input, value, totalLength) {
+		return K.concat(
+			input,
+			createPad(input, value, totalLength)
+		);
+	};
+
+	/**
+	 * Concatenate a string or array n times.
+	 *
+	 * @param {string|array} input
+	 * @param {number} n
+	 */
+	K.repeat = function(input, n) {
+		var isArray = K.isArray(input),
+			result = isArray ? [] : "",
 			i = 0;
 		
-		while (i++ < times) {
-			result = K.concat(result, input);
+		while (i++ < n) {
+			result = result.concat(input);
 		}
 
 		return result;
 	};
 
-	K.padLeft =function(input, padCharacter, totalLength) {
-		return K.concat(K.repeat(padCharacter, totalLength - (input + "").length), input);
-	};
-
-	K.padRight = function(input, padCharacter, totalLength) {
-		return K.concat(input, K.repeat(padCharacter, totalLength - (input + "").length));
-	};
-
+	/**
+	 * Merge sort an array using a custom comparator or, if the array contains all like objects, a property of those objects.
+	 *  
+	 * @param {array} input
+	 * @param {string|function} comparator Either a comparator function or a property name of the objects in this array. 
+	 */
 	K.sort = function(input, comparator) {
 		// No comparator, use the default.
 		if (!comparator) {
@@ -60,6 +105,14 @@ var K = require("./K");
 			
 			return a[key] < b[key] ? -1 : 1;
 		};
+	}
+	
+	function createPad(input, value, totalLength) {
+		if (K.isArray(input)) { 
+			return K.repeat([value], totalLength - input.length);
+		}
+		
+		return K.repeat(value, totalLength - (input + "").length);
 	}
 	
 	function mergeSort(input, comparator) {

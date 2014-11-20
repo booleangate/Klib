@@ -6,7 +6,7 @@ var util = require("gulp-util");
 var source = require("vinyl-source-stream");
 var uglify = require("gulp-uglify");
 
-var jsHintConfig =  {
+var jsHintConfig = {
 	unused: true,
 	eqnull: true
 };

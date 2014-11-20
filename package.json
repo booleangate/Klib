@@ -1,7 +1,7 @@
 {
   "name": "klib",
-  "version": "0.1.2",
-  "description": "Basic library methods, no external dependencies",
+  "version": "0.1.4",
+  "description": "Basic library package, no external dependencies",
   "author": {
     "name": "Justin Johnson",
     "email": "me@justinjohnson.org",
@@ -28,7 +28,8 @@
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "tap tests/*.js"
+    "test": "tap tests/*.js",
+    "publish": "npm publish ./ --tag beta"
   },
   "repository": {
     "type": "git",

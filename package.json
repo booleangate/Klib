@@ -27,8 +27,8 @@
     "vinyl-source-stream": "^1.0.0"
   },
   "scripts": {
-  	"pretest": "gulp",
-    "test": "node tests/*"
+    "pretest": "gulp",
+    "test": "tap tests/*.js"
   },
   "repository": {
     "type": "git",

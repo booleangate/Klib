@@ -1,11 +1,11 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-require("./validation");
-require("./collection");
-require("./object");
+require("./types");
+require("./collections");
+require("./objects");
 
 module.exports = {};
 
-},{"./collection":2,"./object":3,"./validation":4}],2:[function(require,module,exports){
+},{"./collections":2,"./objects":3,"./types":4}],2:[function(require,module,exports){
 var K = require("./K");
 
 (function() {
@@ -172,35 +172,13 @@ var K = require("./K");
 
 (function() {
 	"use strict";
-
-	/**
-	 * Same as dojo.setObject
-	 */
-	K.setObject = function(name, value, rootContext) {
-		var context = rootContext || window,
-			parts   = name.split("."),
-			l       = parts.length - 1,
-			i       = 0;
-
-		
-		while (i < l) {
-			if (typeof context[parts[i]] === "undefined") {
-				context[parts[i]] = {};
-			}
-
-			context = context[parts[i]];
-			++i;
-		}
-
-		context[parts[i]] = value; 
-	};
 	
 	/**
 	 * Add keys from later objects to the first object if they don't already exist. Returns either an object or null.
 	 */
 	K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 		var len = arguments.length, 
-			overwriteNulls = true, 
+			overwriteNulls = false, 
 			result, i, j;
 		
 		if (len < 1) {
@@ -241,6 +219,28 @@ var K = require("./K");
 		}
 		
 		return result;
+	};
+	
+	/**
+	 * Same as dojo.setObject
+	 */
+	K.setObject = function(name, value, rootContext) {
+		var context = rootContext || window,
+			parts   = name.split("."),
+			l       = parts.length - 1,
+			i       = 0;
+
+		
+		while (i < l) {
+			if (typeof context[parts[i]] === "undefined") {
+				context[parts[i]] = {};
+			}
+
+			context = context[parts[i]];
+			++i;
+		}
+
+		context[parts[i]] = value; 
 	};
 	
 	module.exports = K;

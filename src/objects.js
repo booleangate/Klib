@@ -2,35 +2,13 @@ var K = require("./K");
 
 (function() {
 	"use strict";
-
-	/**
-	 * Same as dojo.setObject
-	 */
-	K.setObject = function(name, value, rootContext) {
-		var context = rootContext || window,
-			parts   = name.split("."),
-			l       = parts.length - 1,
-			i       = 0;
-
-		
-		while (i < l) {
-			if (typeof context[parts[i]] === "undefined") {
-				context[parts[i]] = {};
-			}
-
-			context = context[parts[i]];
-			++i;
-		}
-
-		context[parts[i]] = value; 
-	};
 	
 	/**
 	 * Add keys from later objects to the first object if they don't already exist. Returns either an object or null.
 	 */
 	K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 		var len = arguments.length, 
-			overwriteNulls = true, 
+			overwriteNulls = false, 
 			result, i, j;
 		
 		if (len < 1) {
@@ -71,6 +49,28 @@ var K = require("./K");
 		}
 		
 		return result;
+	};
+	
+	/**
+	 * Same as dojo.setObject
+	 */
+	K.setObject = function(name, value, rootContext) {
+		var context = rootContext || window,
+			parts   = name.split("."),
+			l       = parts.length - 1,
+			i       = 0;
+
+		
+		while (i < l) {
+			if (typeof context[parts[i]] === "undefined") {
+				context[parts[i]] = {};
+			}
+
+			context = context[parts[i]];
+			++i;
+		}
+
+		context[parts[i]] = value; 
 	};
 	
 	module.exports = K;

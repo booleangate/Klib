@@ -1,5 +1,5 @@
-require("./validation");
-require("./collection");
-require("./object");
+require("./types");
+require("./collections");
+require("./objects");
 
 module.exports = {};

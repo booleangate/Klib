@@ -1,4 +1,4 @@
-var K = require("../dist/K.js");
+var K = require("../dist/K.min.js");
 var test = require("tape");
 
 test("concat", function(t) {

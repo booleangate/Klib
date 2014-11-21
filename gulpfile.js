@@ -21,6 +21,7 @@ function compile(params) {
 	}
 	
 	params.standalone = "K";
+	params.debug = true;
 	
 	return browserify("./src/K.js", params);
 }

@@ -1,9 +1,10 @@
-var K = require("./K");
+var types = require("./types");
+var objects = {};
 
 /**
  * Add keys from later objects to the first object if they don't already exist. Returns either an object or null.
  */
-K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
+objects.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 	var len = arguments.length, 
 		overwriteNulls = false, 
 		result, i, j;
@@ -12,14 +13,14 @@ K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 		return null;
 	}
 	else if (len === 1) {
-		if (!K.isObject(arguments[0])) {
+		if (!types.isObject(arguments[0])) {
 			return null;
 		}
 		
 		return arguments[0];
 	}
 	
-	if (K.isBoolean(arguments[0])) {
+	if (types.isBoolean(arguments[0])) {
 		overwriteNulls = arguments[0];
 		i = 2;
 	}
@@ -30,7 +31,7 @@ K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 	result = arguments[i - 1];
 	
 	while (i < len) {
-		if (!K.isObject(arguments[i])) {
+		if (!types.isObject(arguments[i])) {
 			throw "K.mixin: encountered non-object at argument index " + i;
 		}
 		
@@ -51,7 +52,7 @@ K.mixin = function(/*[overwriteNulls, ]a, b, c, ...*/) {
 /**
  * Same as dojo.setObject
  */
-K.setObject = function(name, value, rootContext) {
+objects.setObject = function(name, value, rootContext) {
 	var context = rootContext || window,
 		parts   = name.split("."),
 		l       = parts.length - 1,
@@ -70,4 +71,4 @@ K.setObject = function(name, value, rootContext) {
 	context[parts[i]] = value; 
 };
 
-module.exports = K;
+module.exports = objects;

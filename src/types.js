@@ -1,7 +1,6 @@
-var K = require("./K");
+var types = {};
 
-	
-K.getType = function(input) {
+types.getType = function(input) {
 	var typeName;
 	
 	if (input === null) {
@@ -20,60 +19,60 @@ K.getType = function(input) {
 	return typeName.toLowerCase();
 };
 
-K.is = function(input, type, typeName) {
+types.is = function(input, type, typeName) {
 	if (type === null) {
 		return input === type;
 	}
 	
 	if (type.toString().toLowerCase() === "email") {
-		return K.isEmail(input);
+		return types.isEmail(input);
 	}
 	
-	return input instanceof type || K.getType(input) === typeName;
+	return input instanceof type || types.getType(input) === typeName;
 };
 
-K.isArray = function(input) {
-	return K.is(input, Array, "array");
+types.isArray = function(input) {
+	return types.is(input, Array, "array");
 };
 
-K.isBoolean = function(input) {
-	return K.is(input, Boolean, "boolean");
+types.isBoolean = function(input) {
+	return types.is(input, Boolean, "boolean");
 };
 
-K.isDate = function(input) {
-	return K.is(input, Date, "date");
+types.isDate = function(input) {
+	return types.is(input, Date, "date");
 };
 
-K.isError = function(input) {
-	return K.is(input, Error, "error");
+types.isError = function(input) {
+	return types.is(input, Error, "error");
 };
 
-K.isFunction = function(input) {
-	return K.is(input, Function, "function");
+types.isFunction = function(input) {
+	return types.is(input, Function, "function");
 };
 
-K.isNull = function(input) {
+types.isNull = function(input) {
 	return input === null;
 };
 
-K.isNumber = function(input) {
-	return K.is(input, Number, "number");
+types.isNumber = function(input) {
+	return types.is(input, Number, "number");
 };
 
-K.isObject = function(input) {
-	return K.is(input, Object, "object");
+types.isObject = function(input) {
+	return types.is(input, Object, "object");
 };
 
-K.isRegExp = function(input) {
-	return K.is(input, RegExp, "regexp");
+types.isRegExp = function(input) {
+	return types.is(input, RegExp, "regexp");
 };
 
-K.isString = function(input) {
-	return K.is(input, String, "string");
+types.isString = function(input) {
+	return types.is(input, String, "string");
 };
 
-K.isEmail = function(email) {
+types.isEmail = function(email) {
 	return email.match(/^([\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+\.)*[\w\!\#$\%\&\'\*\+\-\/\=\?\^\`{\|\}\~]+@((((([a-z0-9]{1}[a-z0-9\-]{0,62}[a-z0-9]{1})|[a-z])\.)+[a-z]{2,6})|(\d{1,3}\.){3}\d{1,3}(\:\d{1,5})?)$/i);
 };
 
-module.exports = K;
+module.exports = types;

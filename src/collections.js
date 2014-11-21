@@ -1,4 +1,5 @@
-var K = require("./K");
+var types = require("./types");
+var collections = {};
 
 /**
  * Concatenate a string or an array to another of the same type.
@@ -6,7 +7,7 @@ var K = require("./K");
  * @param {string|array} a
  * @param {string|array} b
  */
-K.concat = function(a, b) {
+collections.concat = function(a, b) {
 	// Strict equeality with null is intentionally not used here.
 	if (a == null) {
 		return b;
@@ -14,7 +15,7 @@ K.concat = function(a, b) {
 	else if (b == null) {
 		return a;
 	}
-	else if (K.isArray(a)) {
+	else if (types.isArray(a)) {
 		return a.concat(b);
 	}
 	
@@ -28,8 +29,8 @@ K.concat = function(a, b) {
  * @param {mixed} value
  * @param {number} totalLength
  */
-K.padLeft = function(input, value, totalLength) {
-	return K.concat(
+collections.padLeft = function(input, value, totalLength) {
+	return collections.concat(
 		createPad(input, value, totalLength),
 		input
 	);
@@ -42,8 +43,8 @@ K.padLeft = function(input, value, totalLength) {
  * @param {mixed} value
  * @param {number} totalLength
  */
-K.padRight = function(input, value, totalLength) {
-	return K.concat(
+collections.padRight = function(input, value, totalLength) {
+	return collections.concat(
 		input,
 		createPad(input, value, totalLength)
 	);
@@ -55,8 +56,8 @@ K.padRight = function(input, value, totalLength) {
  * @param {string|array} input
  * @param {number} n
  */
-K.repeat = function(input, n) {
-	var isArray = K.isArray(input),
+collections.repeat = function(input, n) {
+	var isArray = types.isArray(input),
 		result = isArray ? [] : "",
 		i = 0;
 	
@@ -73,10 +74,10 @@ K.repeat = function(input, n) {
  * @param {array|object} input
  * @param {boolean} includeOtherProperties If false (default), only counts own properties of the object.
  */
-K.size = function(input, includeOtherProperties) {
+collections.size = function(input, includeOtherProperties) {
 	var i, keys = 0;
 	
-	if (K.isArray(input)) {
+	if (types.isArray(input)) {
 		return input.length;
 	}
 	
@@ -95,13 +96,13 @@ K.size = function(input, includeOtherProperties) {
  * @param {array} input
  * @param {string|function} comparator Either a comparator function or a property name of the objects in this array. 
  */
-K.sort = function(input, comparator) {
+collections.sort = function(input, comparator) {
 	// No comparator, use the default.
 	if (!comparator) {
 		comparator = defaultComparator;
 	}
 	// Comparator is a key (not a function), create a function.
-	else if (!K.isFunction(comparator)) {
+	else if (!types.isFunction(comparator)) {
 		comparator = createKeyComparator(comparator);
 	}
 
@@ -127,11 +128,11 @@ function createKeyComparator(key) {
 }
 
 function createPad(input, value, totalLength) {
-	if (K.isArray(input)) { 
-		return K.repeat([value], totalLength - input.length);
+	if (types.isArray(input)) { 
+		return collections.repeat([value], totalLength - input.length);
 	}
 	
-	return K.repeat(value, totalLength - (input + "").length);
+	return collections.repeat(value, totalLength - (input + "").length);
 }
 
 function mergeSort(input, comparator) {
@@ -176,4 +177,4 @@ function merge(left, right, comparator) {
 	return result;
 }
 
-module.exports = K;
+module.exports = collections;

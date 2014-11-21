@@ -69,6 +69,16 @@ test("padRight", function(t) {
 	t.end();
 });
 
+test("size", function(t) {
+	var array = [1, 2, 3, 4, 5],
+		object = {a: 1, b: 2, c: 3};
+		
+	t.equal(K.size(array), array.length, "array");
+	t.equal(K.size(object), 3, "object (own properties)");
+	
+	t.end();
+});
+
 test("sort", function(t) {
 	var numbers = [4, 1, 2, 3];
 		numbersExpected = [1, 2, 3, 4],

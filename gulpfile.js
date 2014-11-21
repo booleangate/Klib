@@ -7,11 +7,6 @@ var util = require("gulp-util");
 var source = require("vinyl-source-stream");
 var uglify = require("gulp-uglify");
 
-var jsHintConfig = {
-	unused: true,
-	eqnull: true
-};
-
 function build(stream) {
 	return stream.on("error", util.log.bind(util, "Browserify Error"))
 		.bundle()
@@ -21,6 +16,12 @@ function build(stream) {
 }
 
 function compile(params) {
+	if (!params) {
+		params = {};
+	}
+	
+	params.standalone = "K";
+	
 	return browserify("./src/K.js", params);
 }
 
@@ -33,7 +34,10 @@ function finalize() {
 
 gulp.task("lint", function() {
 	return gulp.src("./src/**/*.js")
-		.pipe(jshint(jsHintConfig))
+		.pipe(jshint({
+			unused: true,
+			eqnull: true
+		}))
 		.pipe(jshint.reporter("default"));
 });
 
@@ -47,11 +51,9 @@ gulp.task("watch", function() {
 	function rebundle() {
 		var stream = build(bundler);
 		
-		console.log("Done rebundling");
-		
 		finalize();
 		
-		console.log("Done finalizing");
+		console.log("Rebuilt at " + new Date());
 		
 		return stream;
 	};

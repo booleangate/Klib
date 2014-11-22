@@ -50,6 +50,8 @@ test("getType", function(t) {
 test("isArray", function(t) {
 	t.ok(K.isArray(new Array()), "constructor");
 	t.ok(K.isArray([]), "literal");
+
+	checkFalsePositives(t, "isArray");
 	
 	t.end();
 });
@@ -58,17 +60,28 @@ test("isBoolean", function(t) {
 	t.ok(K.isBoolean(new Boolean()), "constructor");
 	t.ok(K.isBoolean(true), "literal");
 	
+	// Ensure no false positives
+	t.notOk(K.isBoolean({}), "object");
+	t.notOk(K.isBoolean("asdf"), "string");
+	t.notOk(K.isBoolean(123), "number");
+	
+	checkFalsePositives(t, "isBoolean");
+	
 	t.end();
 });
 
 test("isDate", function(t) {
 	t.ok(K.isDate(new Date()), "constructor");
+	
+	checkFalsePositives(t, "isDate");
 
 	t.end();
 });
 
 test("isError", function(t) {
 	t.ok(K.isError(new Error()), "constructor");
+	
+	checkFalsePositives(t, "isError");
 
 	t.end();
 });
@@ -79,12 +92,16 @@ test("isFunction", function(t) {
 	t.ok(K.isFunction(new Function()), "constructor");
 	t.ok(K.isFunction(function() {}), "anonymous");
 	t.ok(K.isFunction(f), "declarative");
+	
+	checkFalsePositives(t, "isFunction");
 
 	t.end();
 });
 
 test("isNull", function(t) {
 	t.ok(K.isNull(null), "literal");
+	
+	checkFalsePositives(t, "isNull");
 
 	t.end();
 });
@@ -93,6 +110,8 @@ test("isNumber", function(t) {
 	t.ok(K.isNumber(new Number()), "constructor");
 	t.ok(K.isNumber(1), "integer constant");
 	t.ok(K.isNumber(1.1), "decimal constant");
+	
+	checkFalsePositives(t, "isNumber");
 
 	t.end();
 });
@@ -100,6 +119,8 @@ test("isNumber", function(t) {
 test("isObject", function(t) {
 	t.ok(K.isObject(new Object()), "constructor");
 	t.ok(K.isObject({}), "literal");
+	
+	// checkFalsePositives(t, "isObject");
 
 	t.end();
 });
@@ -107,6 +128,8 @@ test("isObject", function(t) {
 test("isRegExp", function(t) {
 	t.ok(K.isRegExp(new RegExp()), "constructor");
 	t.ok(K.isRegExp(/./), "literal");
+	
+	checkFalsePositives(t, "isRegExp");
 
 	t.end();
 });
@@ -114,6 +137,8 @@ test("isRegExp", function(t) {
 test("isString", function(t) {
 	t.ok(K.isString(new String()), "constructor");
 	t.ok(K.isString("ohai"), "constant");
+	
+	checkFalsePositives(t, "isString");
 
 	t.end();
 });
@@ -128,3 +153,18 @@ test("isEmail", function(t) {
 
 	t.end();
 });
+
+function checkFalsePositives(t, method) {
+	var exclude = method.substr(2).toLowerCase();
+	
+	if (exclude != "array") t.notOk(K[method]([]), "array is not " + exclude);
+	if (exclude != "boolean") t.notOk(K[method](true), "boolean is not " + exclude);
+	if (exclude != "date" && exclude != "object") t.notOk(K[method](new Date()), "date is not " + exclude);
+	if (exclude != "error" && exclude != "object") t.notOk(K[method](new Error()), "error is not " + exclude);
+	if (exclude != "function") t.notOk(K[method](new Function()), "function is not " + exclude);
+	if (exclude != "null") t.notOk(K[method](null), "null is not " + exclude);
+	if (exclude != "number") t.notOk(K[method](123.123), "number is not " + exclude);
+	if (exclude != "object") t.notOk(K[method]({}), "object is not " + exclude);
+	if (exclude != "regexp") t.notOk(K[method](/./), "regexp is not " + exclude);
+	if (exclude != "string") t.notOk(K[method]("asdf"), "string is not " + exclude);
+}

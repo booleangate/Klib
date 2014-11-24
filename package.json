@@ -1,6 +1,6 @@
 {
   "name": "klib",
-  "version": "0.1.11",
+  "version": "0.2.0",
   "description": "Basic library package, no external dependencies",
   "author": {
     "name": "Justin Johnson",

@@ -1,7 +1,8 @@
 var components = [
 	require("./types"),
 	require("./collections"),
-	require("./objects")
+	require("./objects"),
+	require("./functions")
 ];
 
 var K = {}, i, j;

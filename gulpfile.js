@@ -7,15 +7,8 @@ var util = require("gulp-util");
 var source = require("vinyl-source-stream");
 var uglify = require("gulp-uglify");
 
-function build(stream) {
-	return stream.on("error", util.log.bind(util, "Browserify Error"))
-		.bundle()
-		.pipe(source("bundle.js"))
-		.pipe(rename("K.js"))
-		.pipe(gulp.dest("./dist"));
-}
 
-function compile(params) {
+function getBundler(params) {
 	if (!params) {
 		params = {};
 	}
@@ -24,6 +17,14 @@ function compile(params) {
 	params.debug = true;
 	
 	return browserify("./src/K.js", params);
+}
+
+function build(bundle) {
+	return bundle.on("error", util.log.bind(util, "Browserify Error"))
+		.bundle()
+		.pipe(source("bundle.js"))
+		.pipe(rename("K.js"))
+		.pipe(gulp.dest("./dist"));
 }
 
 function finalize() {
@@ -43,11 +44,11 @@ gulp.task("lint", function() {
 });
 
 gulp.task("build", function() {
-	return build(compile());
+	return build(getBundler());
 });
 
 gulp.task("watch", function() {
-	var bundler = watchify(compile(watchify.args));
+	var bundler = watchify(getBundler(watchify.args));
 	
 	function rebundle() {
 		var stream = build(bundler);
@@ -60,8 +61,6 @@ gulp.task("watch", function() {
 	};
 	
 	bundler.on("update", rebundle);
-	
-	return rebundle();
 });
 
 gulp.task("finalize", ["build"], finalize);

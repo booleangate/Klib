@@ -18,19 +18,19 @@
   },
   "devDependencies": {
     "browserify": "^6.3.2",
-    "faucet": "0.0.1",
     "gulp": "^3.8.10",
     "gulp-jshint": "^1.9.0",
     "gulp-rename": "^1.2.0",
     "gulp-uglify": "^1.0.1",
     "gulp-util": "^3.0.1",
+    "tap-dot": "^0.2.3",
     "tape": "^3.0.3",
     "vinyl-source-stream": "^1.0.0",
     "watchify": "^2.1.1"
   },
   "scripts": {
     "pretest": "gulp",
-    "test": "faucet tests/*.js"
+    "test": "tape tests/*.js | node_modules/.bin/tap-dot"
   },
   "repository": {
     "type": "git",

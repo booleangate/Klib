@@ -7,6 +7,7 @@ var components = [
 
 var K = {}, i, j;
 
+// Combine all components into one flat namespace, K.
 for (i = 0; i<components.length; ++i) {
 	for (j in components[i]) {
 		if (components[i].hasOwnProperty(j)) {
